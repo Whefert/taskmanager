@@ -21,21 +21,34 @@ import json
 from pathlib import Path
 
 
-def add_task(tasks: list[dict], title: str) -> list[dict]:
+def add_task(tasks: list[dict], title: str, priority: str = "medium") -> list[dict]:
     """Return a new task list with one task appended.
 
     The new task is given the next integer id (one more than the current
-    highest, or 1 for the first task), the supplied title, and a ``done``
-    flag of ``False``.
+    highest, or 1 for the first task), the supplied title, a ``done``
+    flag of ``False``, and the supplied priority.
 
     Raises:
-        ValueError: if ``title`` is empty or only whitespace.
+        ValueError: if ``title`` is empty or only whitespace, or if ``priority``
+                    is not one of "high", "medium", or "low".
     """
     if title is None or not title.strip():
         raise ValueError("Task title must not be empty")
+    valid_priorities = {"high", "medium", "low"}
+    if priority not in valid_priorities:
+        raise ValueError(f"Priority must be one of {valid_priorities}, not {priority!r}")
     next_id = max((task["id"] for task in tasks), default=0) + 1
-    new_task = {"id": next_id, "title": title.strip(), "done": False}
+    new_task = {"id": next_id, "title": title.strip(), "done": False, "priority": priority}
     return tasks + [new_task]
+
+
+def tasks_with_priority(tasks: list[dict], priority: str) -> list[dict]:
+    """Return a new list containing only tasks with the given priority.
+
+    The returned list contains tasks in their original order from the input list.
+    The input list is not modified.
+    """
+    return [task for task in tasks if task.get("priority") == priority]
 
 
 def complete_task(tasks: list[dict], task_id: int) -> list[dict]:
