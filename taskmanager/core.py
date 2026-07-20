@@ -9,11 +9,9 @@ and to serialise to JSON. A task currently has three fields:
 
 Every operation returns a *new* list rather than modifying its argument. This
 keeps the functions easy to test and reason about.
-
-In the mid-module assessment you will extend this module with a task
-"priority" and the ability to filter by it. The exact specification is in the
-README. Do not change the behaviour the existing tests rely on.
 """
+
+# Student ID: 2416130
 
 from __future__ import annotations
 

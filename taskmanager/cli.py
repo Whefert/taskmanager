@@ -9,15 +9,7 @@ Examples:
     python -m taskmanager.cli remove 1
 """
 
-from __future__ import annotations
-
-import argparse
-from pathlib import Path
-
-from taskmanager import core
-
-DEFAULT_STORE = Path("tasks.json")
-
+# Student ID: 2416130
 
 def _format(task: dict) -> str:
     box = "[x]" if task["done"] else "[ ]"
